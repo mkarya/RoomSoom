@@ -2,6 +2,7 @@ package experiment;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -17,6 +18,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -151,9 +154,9 @@ public class DataBaseManager extends ColumnPosition{
 			e2.printStackTrace();
 		}
 
-		
-		String oldFile = System.getProperty("user.dir") + "\\RemoteExcelData\\" + "20160920";
-		String newFile = System.getProperty("user.dir") + "\\RemoteExcelData\\" + "20160924";
+		String dataDir = System.getProperty("user.dir") + "\\RemoteExcelData\\";
+		String oldFile = dataDir + this.findFile(dataDir);
+		String newFile = dataDir + LocalDate.MIN.now().toString().replace("-", "");
 		
 		ArrayList<String> buff = new ArrayList<String>();
 		//buff = this.getLinetoFeed();
@@ -220,6 +223,36 @@ public class DataBaseManager extends ColumnPosition{
         String sqID = xx[2] + xx[0] + Integer.toString(queryID);
         return Integer.parseInt(sqID);
 	}
+	
+	public String findFile(String dir) {
+		FilenameFilter filter = new FilenameFilter() { 
+		    public boolean accept(File dir, String name) {
+			    Date ld = Calendar.getInstance().getTime();
+			    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			    String todayDate = sdf.format(ld);
+		    	int day = 1;
+		    	while (day < 10) {
+		    		int xx = Integer.parseInt(todayDate) - day;
+		    		String tempStr = Integer.toString(xx);
+		    		if (name.compareToIgnoreCase(tempStr) == 0 ) {
+		    			return true;
+		    		}
+		    		day = day + 1;
+		    	}
+		    	return false;
+		    }
+		};
+		
+		File dir1 = new File(dir);	
+	    String children[] = dir1.list(filter);
+	    if (children == null) {
+	         System.out.println("Either dir does not exist or is not a directory");
+	         return null;
+	    } 
+	    
+	    return children[children.length - 1];
+}
+
 	
 	public Date getSQLformattedDate(String idate){
 		Date dd = null;

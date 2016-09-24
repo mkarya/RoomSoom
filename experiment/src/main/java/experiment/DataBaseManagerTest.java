@@ -135,5 +135,14 @@ public class DataBaseManagerTest {
 		return;
 	}
 	
+	@Test
+	public void testfindFile() {
+		File kk = new File (System.getProperty("user.dir") + "//RemoteExcelData//");
+		String fileName = null;
+		if (kk.isDirectory()) {
+			fileName = db.findFile(kk);
+		}
+		System.out.println(fileName);
+	}
 
 }
