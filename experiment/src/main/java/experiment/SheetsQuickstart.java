@@ -37,7 +37,7 @@ public class SheetsQuickstart {
         // Build a new authorized API client service.
 	    Date date = Calendar.getInstance().getTime();
 	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	    String file_todatDate = "C:\\repository\\experiment\\RemoteExcelData\\" + sdf.format(date);
+	    String file_todatDate = System.getProperty("user.dir") + "\\RemoteExcelData\\" + sdf.format(date);
 	    BufferedWriter bw = null;
 	    File varTmpDir = new File(file_todatDate);
 	    
@@ -57,7 +57,7 @@ public class SheetsQuickstart {
 	        	System.exit(-1);
 	        }
 	        String spreadsheetId = "1hbwYfmjTa6HX_ZKpXvL5c3IITrBUaD42tBou7VxaW-c";
-	        String range = "May To Aug!A1:S";
+	        String range = "Sep-16!A1:AI";
 	        ValueRange response = service.spreadsheets().values()
 	            .get(spreadsheetId, range)
 	            .execute();
@@ -95,8 +95,6 @@ public class SheetsQuickstart {
 	      bw.flush();
 	      bw.close();
 	      }
-          //DataBaseManager sql = new DataBaseManager();
-          //sql.DBFeed(values);
        }
     }
 }

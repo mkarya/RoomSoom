@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 import org.apache.http.impl.cookie.DateUtils;
 import org.junit.Test;
@@ -84,8 +85,8 @@ public class DataBaseManagerTest {
 	
 	//@Test
 	public void testGetLineDiffFromFiles(){
-		String oldFile = "C:\\repository\\experiment\\RemoteExcelData\\" + "20160920_01";
-		String newFile = "C:\\repository\\experiment\\RemoteExcelData\\" + "20160920";
+		String oldFile = System.getProperty("user.dir") + "\\RemoteExcelData\\" + "20160920";
+		String newFile = System.getProperty("user.dir") + "\\RemoteExcelData\\" + "20160924";
 		ArrayList<String> lines = new ArrayList<String>();
 		
 		try {
@@ -100,7 +101,7 @@ public class DataBaseManagerTest {
 		
 		FileWriter kk = null;
 		try {
-			kk = new FileWriter(new File("C:\\repository\\experiment\\RemoteExcelData\\testdatafile"));
+			kk = new FileWriter(new File(System.getProperty("user.dir"),"TestLog\\testdatafile"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -123,6 +124,15 @@ public class DataBaseManagerTest {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	//@Test
+	public void general() {
+		System.out.println(System.getProperty("user.dir"));
+		System.out.println(System.getProperty("user.home"));
+		System.out.println(LocalDate.MIN.now());
+		System.out.println( "TestLog/"+ LocalDate.MIN.now().toString());
+		return;
 	}
 	
 
